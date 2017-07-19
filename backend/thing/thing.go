@@ -12,7 +12,7 @@ const (
 // Thing represents a connected object
 type Thing struct {
 	ID         bson.ObjectId `json:"id" bson:"_id"`
-	MacAddress string        `json:"mac-address"`
+	MacAddress string        `json:"macaddress"`
 	Type       string        `json:"type"`
 	Name       string        `json:"name"`
 	Location   string        `json:"location"`

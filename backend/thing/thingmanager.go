@@ -71,11 +71,12 @@ func Update(t Thing) error {
 	c := s.DB(cfg.DbName).C(ThingCollectionName)
 
 	return c.Update(bson.M{"_id": t.ID}, bson.M{"getters": t.Getters,
-		"actions":  t.Actions,
-		"location": t.Location,
-		"protocol": t.Protocol,
-		"name":     t.Name,
-		"type":     t.Type})
+		"actions":    t.Actions,
+		"location":   t.Location,
+		"protocol":   t.Protocol,
+		"name":       t.Name,
+		"type":       t.Type,
+		"macaddress": t.MacAddress})
 }
 
 // ReadGetterName return things that have a getter with the given name

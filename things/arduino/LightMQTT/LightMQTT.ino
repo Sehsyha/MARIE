@@ -1,11 +1,14 @@
 #include <MQTTClient.h>
 #include <BridgeClient.h>
 #include <Process.h>
+#include <ArduinoJson.h>
 
 BridgeClient net;
 MQTTClient client;
 boolean on;
 String macAddr;
+StaticJsonBuffer<200> jsonBuffer;
+
 
 void setup () {
   Bridge.begin();
@@ -64,9 +67,13 @@ void loop() {
 }
 
 void messageReceived(String topic, String payload, char * bytes, unsigned int length) {
-  if (topic == "/on") {
-    on = true;
-  } else if (topic == "/off") {
-    on = false;
+  JsonObject& root = jsonBuffer.parseObject(payload);
+  String requiredMacAddress = root["macaddress"];
+  if (requiredMacAddress == macAddr) {
+    if (topic == "/on") {
+      on = true;
+    } else if (topic == "/off") {
+      on = false;
+    }
   }
 }

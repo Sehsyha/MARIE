@@ -66,7 +66,12 @@ func Do(mac string, name string, params map[string]interface{}) {
 	// 	log.Println("Error while parsing JSON")
 	// 	return
 	// }
-	mqtt.Publish(name, []byte(mac), 0, false)
+	req := map[string]string{"macaddress": mac}
+	reqStr, err := json.Marshal(req)
+	if err != nil {
+		log.Fatal(err)
+	}
+	mqtt.Publish(name, []byte(reqStr), 0, false)
 }
 
 func handle(msg *packet.Message, err error) {

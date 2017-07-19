@@ -39,6 +39,7 @@ void connect () {
   client.subscribe("/on");
   client.subscribe("/off");
   client.publish("/register", String("{\"mac-address\":\"" + macAddr + "\","
+                                     "\"location\": \"couloir\","
                                      "\"type\": \"light\","
                                      "\"actions\":["
                                      "{\"name\":\"on\"},"

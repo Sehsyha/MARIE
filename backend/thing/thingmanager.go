@@ -6,6 +6,7 @@ import (
 	"gopkg.in/mgo.v2/bson"
 
 	"github.com/Zenika/MARIE/backend/config"
+
 	"github.com/Zenika/MARIE/backend/utils"
 )
 
@@ -93,6 +94,25 @@ func ReadGetterName(name string) []Thing {
 		log.Fatal(err)
 	}
 	return things
+}
+
+// ReadMacAddress return thing with mac address
+func ReadMacAddress(mac string) (Thing, error) {
+	cfg := config.Load()
+
+	s := utils.GetSession()
+	defer s.Close()
+
+	c := s.DB(cfg.DbName).C(ThingCollectionName)
+	t := Thing{}
+
+	err := c.Find(bson.M{"macaddress": mac}).One(t)
+
+	if err != nil {
+		return t, err
+	}
+
+	return t, nil
 }
 
 // ReadActionName return things that have an action with the given name
